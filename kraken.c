@@ -13,6 +13,8 @@
 #define SENSORPIN A0
 #define ANALOGPIN A0
 
+// implement more BME280 Sensors
+
 char ssid[] = "XXX";
 const char* password = "XXX";
 
