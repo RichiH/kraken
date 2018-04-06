@@ -114,7 +114,8 @@ void setup(void){
   });
 
   server.on("/metrics", [](){
-    Serial.println("\n[Client connected]");
+    String client_ip = server.client().remoteIP().toString();
+    Serial.println("Client connected from: " + client_ip);
 
     bme.read(airPres, airTemperature, airHumidity);
     sensorValue = analogRead(SENSORPIN);
@@ -129,11 +130,11 @@ void setup(void){
     vapor_pressure_hPa = (airHumidity / 100) * saturation_vapor_pressure_hPa;
     v = log10(vapor_pressure_hPa/6.1078);
     dew_point_celsius = b * v / (a - v);
-//    Serial.println("dew point" + String(dew_point_celsius) + "\n");
+    //Serial.println("dew point: " + String(dew_point_celsius));
 
     // absolute humidity
     absolute_humidity_g_per_m3 = 100000 * mw / R  * vapor_pressure_hPa / (airTemperature + 273.15);
-//    Serial.println("abs humidity" + String(absolute_humidity_g_per_m3) + "\n");
+    //Serial.println("abs humidity: " + String(absolute_humidity_g_per_m3));
 
     server.send(200, "text/plain", promResponse());
   });
