@@ -10,13 +10,15 @@
 
 #include <math.h>
 
+#include "kraken.config.h"
 
 #define LED D4
 #define SENSORPIN A0
 #define ANALOGPIN A0
 
-char ssid[] = "XXX";
-const char* password = "XXX";
+char ssid[] = wlan_ssid;
+const char* password = wlan_pass;
+
 
 ESP8266WebServer server(80);
 
