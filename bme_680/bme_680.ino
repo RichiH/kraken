@@ -132,7 +132,7 @@ void loop() {
     Serial.println(time);
     // Efficiency in requests can be gained by batching writes so we accumulate 5 samples before sending.
     // This is not necessary however, especially if your writes are infrequent, but it's recommended to build batches when you can.
-    if (loopCounter >= 5) {
+    if (loopCounter >= 3) {
         //Send
         loopCounter = 0;
         PromClient::SendResult res = client.send(req);
@@ -181,5 +181,5 @@ void loop() {
         }       
         loopCounter++;
     }
-    delay(500);
+    delay(5000);
 };
