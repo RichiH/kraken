@@ -132,7 +132,34 @@ void loop() {
     Serial.println(time);
     // Efficiency in requests can be gained by batching writes so we accumulate 5 samples before sending.
     // This is not necessary however, especially if your writes are infrequent, but it's recommended to build batches when you can.
-    if (loopCounter >= 3) {
+    
+    if (!ts1.addSample(time, millis())) {
+        Serial.println(ts1.errmsg);
+    }
+    if (!ts2.addSample(time, freeMemory())) {
+        Serial.println(ts2.errmsg);
+    }
+    if (!ts3.addSample(time, bme.temperature)) {
+        Serial.println(ts3.errmsg);
+    }
+    if (!ts4.addSample(time, bme.pressure)) {
+        Serial.println(ts4.errmsg);
+    }
+    if (!ts5.addSample(time, bme.humidity)) {
+        Serial.println(ts5.errmsg);
+    }
+    if (!ts6.addSample(time, bme.gas_resistance)) {
+        Serial.println(ts6.errmsg);
+    }
+    if (!ts7.addSample(time, bme.readAltitude(SEALEVELPRESSURE_HPA))) {
+        Serial.println(ts7.errmsg);
+    }
+    if (!ts8.addSample(time, dewPointCelsius)) {
+        Serial.println(ts8.errmsg);
+    }       
+    loopCounter++;
+
+    if (loopCounter >= 1) { // Could be upped to '4' in production
         //Send
         loopCounter = 0;
         PromClient::SendResult res = client.send(req);
@@ -154,32 +181,6 @@ void loop() {
         ts7.resetSamples();
         ts8.resetSamples();
     }
-    else {
-        if (!ts1.addSample(time, millis())) {
-            Serial.println(ts1.errmsg);
-        }
-        if (!ts2.addSample(time, freeMemory())) {
-            Serial.println(ts2.errmsg);
-        }
-        if (!ts3.addSample(time, bme.temperature)) {
-            Serial.println(ts3.errmsg);
-        }
-        if (!ts4.addSample(time, bme.pressure)) {
-            Serial.println(ts4.errmsg);
-        }
-        if (!ts5.addSample(time, bme.humidity)) {
-            Serial.println(ts5.errmsg);
-        }
-        if (!ts6.addSample(time, bme.gas_resistance)) {
-            Serial.println(ts6.errmsg);
-        }
-        if (!ts7.addSample(time, bme.readAltitude(SEALEVELPRESSURE_HPA))) {
-            Serial.println(ts7.errmsg);
-        }
-        if (!ts8.addSample(time, dewPointCelsius)) {
-            Serial.println(ts8.errmsg);
-        }       
-        loopCounter++;
-    }
-    delay(5000);
+    
+    delay(15000);
 };
