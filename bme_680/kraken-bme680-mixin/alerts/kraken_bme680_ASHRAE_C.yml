@@ -1,0 +1,43 @@
+groups:
+- name: ASHRAE_C
+  rules:
+  - alert: temperature_low
+    expr: kraken_temperature_celsius < 5
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} temp: {{$value}}C
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} below ASHRAE C 5C: {{$value}}C.'
+  - alert: temperature_high
+    expr: kraken_temperature_celsius > 40
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} temp: {{$value}}C
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} above ASHRAE C 40C: {{$value}}C.'
+  - alert: dew_point_high
+    expr: kraken_dew_point_celsius > 28
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} dew point: {{$value}}C
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} above ASHRAE C dew point 28C: {{$value}}C.'
+  - alert: relative_humidity_low
+    expr: kraken_temperature_celsius < 8
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} relHun: {{$value}}%
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} below ASHRAE C 8%: {{$value}}%.'
+  - alert: relative_humidity_high
+    expr: kraken_temperature_celsius > 80
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} relHum: {{$value}}%
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} above ASHRAE C 80%: {{$value}}%.'

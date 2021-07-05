@@ -1,0 +1,19 @@
+groups:
+- name: ASHRAE_general
+  rules:
+  - alert: dew_point_warning
+    expr: kraken_temperature_celsius - kraken_dew_point_celsius < 1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: {{$labels.instance}} temperature near dew point
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a temperature near the dew point.'
+  - alert: dew_point_critical
+    expr: kraken_temperature_celsius - kraken_dew_point_celsius < 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: {{$labels.instance}} temperature under dew point
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a temperature under the dew point.'
