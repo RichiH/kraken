@@ -1,4 +1,4 @@
-The Kraken BME680 is a set of configurable, reusable, and extensible alerts and dashboards based on the metrics exported by kraken with BME680. The mixin creates recording and alerting rules for Prometheus and suitable dashboard descriptions for Grafana.
+The Kraken BME680 Mixin is a set of configurable, reusable, and extensible alerts and dashboards based on the metrics exported by kraken with BME680. The mixin creates recording and alerting rules for Prometheus and suitable dashboard descriptions for Grafana.
 
 To use them, you need to have mixtool and jsonnetfmt installed. If you have a working Go development environment, it's easiest to run the following:
 
