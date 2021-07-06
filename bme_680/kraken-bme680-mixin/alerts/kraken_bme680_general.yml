@@ -7,7 +7,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: {{$labels.instance}} temperature near dew point
+      summary: "{{$labels.instance}} temperature near dew point"
       description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a temperature near the dew point.'
   - alert: dew_point_critical
     expr: kraken_temperature_celsius - kraken_dew_point_celsius < 0
@@ -15,5 +15,5 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: {{$labels.instance}} temperature under dew point
+      summary: "{{$labels.instance}} temperature under dew point"
       description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a temperature under the dew point.'
