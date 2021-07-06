@@ -1,0 +1,36 @@
+# According to DIN EN 13779: 2007–09
+groups:
+- name: CO2_COVID19
+  rules:
+  - alert: co2_concentration_IDA2
+    expr: 1000 >= kraken_co2_ppm > 800
+    for: 5m
+    labels:
+      severity: info
+    annotations:
+      summary: "{{$labels.instance}} at info level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 800 ppm CO2: {{$value}}. IDA2, medium air quality'
+  - alert: co2_concentration_IDA3
+    expr: 1400 >= kraken_co2_ppm > 1000
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "{{$labels.instance}} at warning level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 1000 ppm CO2: {{$value}}. IDA3, lowered air quality'
+  - alert: co2_concentration_IDA4
+    expr: 2000 >= kraken_co2_ppm > 1400
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "{{$labels.instance}} at high level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 1400 ppm CO2: {{$value}}. IDA4, low air quality'
+  - alert: co2_concentration_2000ppm
+    expr: kraken_co2_ppm > 2000
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "{{$labels.instance}} at critical level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 2000 ppm CO2: {{$value}}. Not allowed under German health and safety'

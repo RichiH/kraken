@@ -1,0 +1,19 @@
+groups:
+- name: CO2_COVID19
+  rules:
+  - alert: co2_concentration_800ppm
+    expr: kraken_co2_ppm > 800
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "{{$labels.instance}} at warning level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 800 ppm CO2: {{$value}}'
+  - alert: co2_concentration_1000ppm
+    expr: kraken_co2_ppm > 800
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "{{$labels.instance}} at critical level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 1000 ppm CO2: {{$value}}'

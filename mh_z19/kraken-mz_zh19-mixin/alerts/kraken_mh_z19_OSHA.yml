@@ -1,0 +1,36 @@
+# According to https://www.fsis.usda.gov/sites/default/files/media_file/2020-08/Carbon-Dioxide.pdf
+groups:
+- name: CO2_COVID19
+  rules:
+  - alert: co2_concentration_5000
+    expr: 10000 >= kraken_co2_ppm > 5000
+    for: 5m
+    labels:
+      severity: info
+    annotations:
+      summary: "{{$labels.instance}} at info level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 5000 ppm CO2: {{$value}}. Over OSHA PEL and ACGIH threshold for 8 hour exposure'
+  - alert: co2_concentration_10000
+    expr: 15000 >= kraken_co2_ppm > 10000
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "{{$labels.instance}} at warning level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 10000 ppm CO2: {{$value}}. Possible drowsiness'
+  - alert: co2_concentration_15000
+    expr: 30000 >= kraken_co2_ppm > 15000
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "{{$labels.instance}} at high level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 15000 ppm CO2: {{$value}}. Increased heart rate and blood pressure, ACGIH short term'
+  - alert: co2_concentration_40000
+    expr: kraken_co2_ppm > 40000
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "{{$labels.instance}} at high level for CO2 concentration"
+      description: 'Sensor {{$labels.instance}} from job {{$labels.job}} is measuring a over 50000 ppm CO2: {{$value}}. Immediately Dangerous to Life or Health'
